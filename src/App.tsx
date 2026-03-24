@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   MapPin, Phone, Clock, Utensils, Wind, Truck, 
   PartyPopper, Facebook, Instagram, Menu, X, ChevronRight,
-  Star, Coffee, Baby, MessageCircle, CheckCircle
+  Star, Coffee, Baby, MessageCircle, CheckCircle, Sun, Moon
 } from 'lucide-react';
 
 const IMAGES = [
@@ -60,6 +60,7 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,25 +93,32 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-50 font-sans text-zinc-900">
+    <div className={`min-h-screen font-sans transition-colors duration-300 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-brand-50 text-zinc-900'}`}>
       {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}>
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <a href="#" className="flex items-center gap-2">
-              <span className={`font-serif text-2xl font-bold ${isScrolled ? 'text-brand-600' : 'text-white drop-shadow-md'}`}>
+              <span className={`font-serif text-2xl font-bold ${isScrolled ? 'text-brand-600 dark:text-brand-500' : 'text-white drop-shadow-md'}`}>
                 Royal Tadka
               </span>
             </a>
             
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
-              <a href="#menu" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700' : 'text-white drop-shadow-md'}`}>Menu</a>
-              <a href="#services" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700' : 'text-white drop-shadow-md'}`}>Services</a>
-              <a href="#gallery" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700' : 'text-white drop-shadow-md'}`}>Gallery</a>
-              <a href="#book" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700' : 'text-white drop-shadow-md'}`}>Book Table</a>
-              <a href="#contact" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700' : 'text-white drop-shadow-md'}`}>Contact</a>
-              <a href="#about" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700' : 'text-white drop-shadow-md'}`}>About</a>
+              <a href="#menu" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700 dark:text-zinc-200' : 'text-white drop-shadow-md'}`}>Menu</a>
+              <a href="#services" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700 dark:text-zinc-200' : 'text-white drop-shadow-md'}`}>Services</a>
+              <a href="#gallery" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700 dark:text-zinc-200' : 'text-white drop-shadow-md'}`}>Gallery</a>
+              <a href="#book" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700 dark:text-zinc-200' : 'text-white drop-shadow-md'}`}>Book Table</a>
+              <a href="#contact" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700 dark:text-zinc-200' : 'text-white drop-shadow-md'}`}>Contact</a>
+              <a href="#about" className={`font-medium hover:text-brand-500 transition-colors ${isScrolled ? 'text-zinc-700 dark:text-zinc-200' : 'text-white drop-shadow-md'}`}>About</a>
+              <button 
+                onClick={() => setIsDarkMode(!isDarkMode)} 
+                className={`p-2 rounded-full transition-colors ${isScrolled ? 'text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800' : 'text-white hover:bg-white/20'}`}
+                aria-label="Toggle Dark Mode"
+              >
+                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
               <a href="https://wa.me/918292995163" target="_blank" rel="noopener noreferrer" className="bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-full font-medium transition-colors shadow-lg shadow-green-500/30 flex items-center gap-2">
                 <MessageCircle className="w-4 h-4" />
                 WhatsApp
@@ -118,16 +126,24 @@ export default function App() {
             </div>
 
             {/* Mobile Menu Button */}
-            <button 
-              className="md:hidden p-2"
+            <div className="md:hidden flex items-center gap-2">
+              <button 
+                onClick={() => setIsDarkMode(!isDarkMode)} 
+                className={`p-2 rounded-full transition-colors ${isScrolled ? 'text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800' : 'text-white hover:bg-white/20'}`}
+              >
+                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+              <button 
+                className="p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
-                <X className={`w-6 h-6 ${isScrolled ? 'text-zinc-900' : 'text-white'}`} />
+                <X className={`w-6 h-6 ${isScrolled ? 'text-zinc-900 dark:text-white' : 'text-white'}`} />
               ) : (
-                <Menu className={`w-6 h-6 ${isScrolled ? 'text-zinc-900' : 'text-white'}`} />
+                <Menu className={`w-6 h-6 ${isScrolled ? 'text-zinc-900 dark:text-white' : 'text-white'}`} />
               )}
-            </button>
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -139,14 +155,14 @@ export default function App() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-white pt-24 px-4 pb-6 md:hidden flex flex-col gap-4"
+            className="fixed inset-0 z-40 bg-white dark:bg-zinc-900 pt-24 px-4 pb-6 md:hidden flex flex-col gap-4"
           >
-            <a href="#menu" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 p-4 border-b border-zinc-100">Menu</a>
-            <a href="#services" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 p-4 border-b border-zinc-100">Services</a>
-            <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 p-4 border-b border-zinc-100">Gallery</a>
-            <a href="#book" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 p-4 border-b border-zinc-100">Book Table</a>
-            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 p-4 border-b border-zinc-100">Contact</a>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 p-4 border-b border-zinc-100">About</a>
+            <a href="#menu" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 dark:text-zinc-200 p-4 border-b border-zinc-100 dark:border-zinc-800">Menu</a>
+            <a href="#services" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 dark:text-zinc-200 p-4 border-b border-zinc-100 dark:border-zinc-800">Services</a>
+            <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 dark:text-zinc-200 p-4 border-b border-zinc-100 dark:border-zinc-800">Gallery</a>
+            <a href="#book" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 dark:text-zinc-200 p-4 border-b border-zinc-100 dark:border-zinc-800">Book Table</a>
+            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 dark:text-zinc-200 p-4 border-b border-zinc-100 dark:border-zinc-800">Contact</a>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="text-xl font-medium text-zinc-800 dark:text-zinc-200 p-4 border-b border-zinc-100 dark:border-zinc-800">About</a>
             <div className="mt-auto flex flex-col gap-3">
               <a href="https://wa.me/918292995163" target="_blank" rel="noopener noreferrer" className="bg-green-500 text-white p-4 rounded-xl font-medium text-center flex items-center justify-center gap-2">
                 <MessageCircle className="w-5 h-5" />
@@ -206,12 +222,12 @@ export default function App() {
       </section>
 
       {/* Menu Section */}
-      <section id="menu" className="py-20 bg-white">
+      <section id="menu" className="py-20 bg-white dark:bg-zinc-950 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mb-4">Our Menu</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-zinc-900 dark:text-white mb-4">Our Menu</h2>
             <div className="w-24 h-1 bg-brand-500 mx-auto rounded-full"></div>
-            <p className="mt-6 text-zinc-600 max-w-2xl mx-auto text-lg">
+            <p className="mt-6 text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto text-lg">
               Explore our wide variety of delicious dishes, prepared with love and the finest ingredients.
             </p>
           </div>
@@ -224,17 +240,17 @@ export default function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-zinc-50 rounded-2xl p-8 border border-zinc-100"
+                className="bg-zinc-50 dark:bg-zinc-900/50 rounded-2xl p-8 border border-zinc-100 dark:border-zinc-800"
               >
-                <h3 className="text-2xl font-serif font-bold text-zinc-900 mb-6 pb-4 border-b border-zinc-200">{category.title}</h3>
+                <h3 className="text-2xl font-serif font-bold text-zinc-900 dark:text-white mb-6 pb-4 border-b border-zinc-200 dark:border-zinc-800">{category.title}</h3>
                 <div className="space-y-6">
                   {category.items.map((item, itemIdx) => (
                     <div key={itemIdx}>
                       <div className="flex justify-between items-center mb-1">
-                        <h4 className="font-bold text-zinc-900">{item.name}</h4>
-                        <span className="font-bold text-brand-600">{item.price}</span>
+                        <h4 className="font-bold text-zinc-900 dark:text-zinc-100">{item.name}</h4>
+                        <span className="font-bold text-brand-600 dark:text-brand-500">{item.price}</span>
                       </div>
-                      <p className="text-sm text-zinc-500">{item.desc}</p>
+                      <p className="text-sm text-zinc-500 dark:text-zinc-400">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -247,12 +263,12 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="rounded-2xl overflow-hidden shadow-lg border border-zinc-200 group"
+              className="rounded-2xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 group"
             >
               <img 
                 src="https://lh3.googleusercontent.com/p/AF1QipNnyVO0ATSGzCb7JsPxxrLwuVqx9_C9LN4nMEZ9=s2048" 
                 alt="Menu Page 1" 
-                className="w-full h-auto object-contain bg-zinc-100 transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-auto object-contain bg-zinc-100 dark:bg-zinc-900 transition-transform duration-700 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
             </motion.div>
@@ -261,12 +277,12 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="rounded-2xl overflow-hidden shadow-lg border border-zinc-200 group"
+              className="rounded-2xl overflow-hidden shadow-lg border border-zinc-200 dark:border-zinc-800 group"
             >
               <img 
                 src="https://lh3.googleusercontent.com/p/AF1QipM68G4lEtSlCem47637KASmckTojICPmPGn7yLB=s2048" 
                 alt="Menu Page 2" 
-                className="w-full h-auto object-contain bg-zinc-100 transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-auto object-contain bg-zinc-100 dark:bg-zinc-900 transition-transform duration-700 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
             </motion.div>
@@ -275,12 +291,12 @@ export default function App() {
       </section>
 
       {/* Features Section (About) */}
-      <section id="about" className="py-20 bg-brand-50">
+      <section id="about" className="py-20 bg-brand-50 dark:bg-zinc-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mb-4">Why Choose Us</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-zinc-900 dark:text-white mb-4">Why Choose Us</h2>
             <div className="w-24 h-1 bg-brand-500 mx-auto rounded-full"></div>
-            <p className="mt-6 text-zinc-600 max-w-2xl mx-auto text-lg">
+            <p className="mt-6 text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto text-lg">
               We are committed to providing the best dining experience with top-notch facilities and services.
             </p>
           </div>
@@ -293,13 +309,13 @@ export default function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-white rounded-2xl p-8 text-center hover:shadow-lg transition-shadow border border-zinc-100"
+                className="bg-white dark:bg-zinc-800 rounded-2xl p-8 text-center hover:shadow-lg transition-shadow border border-zinc-100 dark:border-zinc-700"
               >
-                <div className="w-16 h-16 mx-auto bg-brand-100 rounded-full flex items-center justify-center mb-6 text-brand-600">
+                <div className="w-16 h-16 mx-auto bg-brand-100 dark:bg-brand-900/30 rounded-full flex items-center justify-center mb-6 text-brand-600 dark:text-brand-500">
                   <feature.icon className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-zinc-900 mb-2">{feature.title}</h3>
-                <p className="text-zinc-600">{feature.desc}</p>
+                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">{feature.title}</h3>
+                <p className="text-zinc-600 dark:text-zinc-400">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -348,12 +364,12 @@ export default function App() {
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="py-20 bg-brand-50">
+      <section id="gallery" className="py-20 bg-brand-50 dark:bg-zinc-950 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mb-4">Our Gallery</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-zinc-900 dark:text-white mb-4">Our Gallery</h2>
             <div className="w-24 h-1 bg-brand-500 mx-auto rounded-full mb-6"></div>
-            <p className="text-zinc-600 max-w-2xl mx-auto">Take a peek inside our restaurant and see the delightful dishes we serve.</p>
+            <p className="text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">Take a peek inside our restaurant and see the delightful dishes we serve.</p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
@@ -380,54 +396,54 @@ export default function App() {
       </section>
 
       {/* Visit & Book Section */}
-      <section id="contact" className="py-20 bg-brand-50">
+      <section id="contact" className="py-20 bg-brand-50 dark:bg-zinc-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-zinc-900 mb-4">Visit Us</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-zinc-900 dark:text-white mb-4">Visit Us</h2>
             <div className="w-24 h-1 bg-brand-500 mx-auto rounded-full"></div>
-            <p className="mt-6 text-zinc-600 max-w-2xl mx-auto text-lg">
+            <p className="mt-6 text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto text-lg">
               Join us for an unforgettable dining experience. Find us or reserve your table in advance.
             </p>
           </div>
           
           {/* Contact Info Row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-zinc-100 flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 mb-4">
+            <div className="bg-white dark:bg-zinc-800 p-8 rounded-3xl shadow-sm border border-zinc-100 dark:border-zinc-700 flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-full bg-brand-100 dark:bg-brand-900/30 flex items-center justify-center text-brand-600 dark:text-brand-500 mb-4">
                 <MapPin className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-zinc-900">Address</h3>
-              <p className="text-zinc-600 leading-relaxed">
+              <h3 className="text-xl font-bold mb-2 text-zinc-900 dark:text-white">Address</h3>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 1st Floor, Milap Building,<br />
                 Near Subhash Chowk, Main Road,<br />
                 Ramgarh Cantt, Jharkhand 829122
               </p>
             </div>
             
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-zinc-100 flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 mb-4">
+            <div className="bg-white dark:bg-zinc-800 p-8 rounded-3xl shadow-sm border border-zinc-100 dark:border-zinc-700 flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-full bg-brand-100 dark:bg-brand-900/30 flex items-center justify-center text-brand-600 dark:text-brand-500 mb-4">
                 <Phone className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-zinc-900">Contact</h3>
+              <h3 className="text-xl font-bold mb-2 text-zinc-900 dark:text-white">Contact</h3>
               <div className="flex flex-col gap-1">
-                <a href="tel:8292995163" className="text-zinc-600 hover:text-brand-600 transition-colors text-lg">82929 95163</a>
-                <a href="tel:07542828702" className="text-zinc-600 hover:text-brand-600 transition-colors text-lg">075428 28702</a>
+                <a href="tel:8292995163" className="text-zinc-600 dark:text-zinc-400 hover:text-brand-600 dark:hover:text-brand-500 transition-colors text-lg">82929 95163</a>
+                <a href="tel:07542828702" className="text-zinc-600 dark:text-zinc-400 hover:text-brand-600 dark:hover:text-brand-500 transition-colors text-lg">075428 28702</a>
               </div>
             </div>
             
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-zinc-100 flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 mb-4">
+            <div className="bg-white dark:bg-zinc-800 p-8 rounded-3xl shadow-sm border border-zinc-100 dark:border-zinc-700 flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-full bg-brand-100 dark:bg-brand-900/30 flex items-center justify-center text-brand-600 dark:text-brand-500 mb-4">
                 <Clock className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold mb-2 text-zinc-900">Everyday</h3>
-              <p className="text-zinc-600 font-medium">Open Everyday</p>
-              <p className="text-zinc-600">10:30 am – 10:30 pm</p>
+              <h3 className="text-xl font-bold mb-2 text-zinc-900 dark:text-white">Everyday</h3>
+              <p className="text-zinc-600 dark:text-zinc-400 font-medium">Open Everyday</p>
+              <p className="text-zinc-600 dark:text-zinc-400">10:30 am – 10:30 pm</p>
             </div>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Map */}
-            <div className="h-[400px] lg:h-full min-h-[400px] rounded-3xl overflow-hidden shadow-xl border border-zinc-200">
+            <div className="h-[400px] lg:h-full min-h-[400px] rounded-3xl overflow-hidden shadow-xl border border-zinc-200 dark:border-zinc-800">
               <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.760773099778!2d85.51651817596205!3d23.62900749546875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f455b8c1192831%3A0x6b772274472f883f!2sRoyal%20Tadka%20Restaurant!5e0!3m2!1sen!2sin!4v1709867041234!5m2!1sen!2sin" 
                 width="100%" 
@@ -441,7 +457,7 @@ export default function App() {
             </div>
             
             {/* Book a Table Form */}
-            <div id="book" className="bg-white rounded-3xl shadow-xl overflow-hidden h-fit">
+            <div id="book" className="bg-white dark:bg-zinc-800 rounded-3xl shadow-xl overflow-hidden h-fit">
               <div className="bg-brand-600 text-white p-8 relative overflow-hidden">
                 <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-500 rounded-full blur-3xl opacity-50"></div>
                 <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-brand-700 rounded-full blur-3xl opacity-50"></div>
@@ -469,27 +485,27 @@ export default function App() {
                 }}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-medium text-zinc-700 mb-1">Full Name</label>
-                      <input name="name" type="text" required className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="John Doe" />
+                      <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Full Name</label>
+                      <input name="name" type="text" required className="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="John Doe" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-zinc-700 mb-1">Phone Number</label>
-                      <input name="phone" type="tel" required className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="+91 XXXXX XXXXX" />
+                      <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Phone Number</label>
+                      <input name="phone" type="tel" required className="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="+91 XXXXX XXXXX" />
                     </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-medium text-zinc-700 mb-1">Date</label>
-                      <input name="date" type="date" required className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" />
+                      <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Date</label>
+                      <input name="date" type="date" required className="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-zinc-700 mb-1">Time</label>
-                      <input name="time" type="time" required className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" />
+                      <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Time</label>
+                      <input name="time" type="time" required className="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-zinc-700 mb-1">Number of Guests</label>
-                    <select name="guests" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Number of Guests</label>
+                    <select name="guests" className="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
                       <option value="1">1 Person</option>
                       <option value="2">2 People</option>
                       <option value="3">3 People</option>
@@ -498,7 +514,7 @@ export default function App() {
                       <option value="6+">6+ People</option>
                     </select>
                   </div>
-                  <button type="submit" className="w-full bg-zinc-900 hover:bg-brand-600 text-white font-medium py-4 rounded-xl transition-colors mt-2 text-lg shadow-lg shadow-zinc-900/20">
+                  <button type="submit" className="w-full bg-zinc-900 dark:bg-zinc-700 hover:bg-brand-600 dark:hover:bg-brand-600 text-white font-medium py-4 rounded-xl transition-colors mt-2 text-lg shadow-lg shadow-zinc-900/20">
                     Confirm Reservation
                   </button>
                 </form>
